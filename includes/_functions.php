@@ -91,13 +91,17 @@ function postSueldos($tabla, $suf, $json){
   if(sizeOf($json['jugadores']) > 0){
     foreach ($json['jugadores'] as $jugador => $jug) {
       $jug['goles_minimos'] = $tabla[$jug['nivel']];
-      $jug['alcance_individual'] = floatVal(intVal($jug['goles']) / intVal($jug['goles_minimos']));
+      $jug['alcance_individual'] = (floatVal(intVal($jug['goles']) / intVal($jug['goles_minimos'])) > 1) ? 1 : floatVal(intVal($jug['goles']) / intVal($jug['goles_minimos']));
       $total_requerido = intVal($total_requerido) + intVal($jug['goles_minimos']);
       $total_obtenido = intVal($total_obtenido) + intVal($jug['goles']);
       array_push($datos_procesados, $jug);
     }
   }
-  $alcance_equipo = floatVal($total_obtenido / $total_requerido);
+  if($total_obtenido >= $total_requerido){
+    $alcance_equipo = floatval(1);
+  }else{
+    $alcance_equipo = floatVal($total_obtenido / $total_requerido);
+  }
   $respuesta = [];
   if(sizeOf($datos_procesados) > 0){
     foreach ($datos_procesados as $datos => $elemento) {
@@ -111,11 +115,11 @@ function postSueldos($tabla, $suf, $json){
       $elemento['sueldo_completo'] = $sueldo_completo;
       $respuesta['jugadores'][] = [
         "nombre" => $elemento['nombre'],
-        "goles_minimos" => $elemento['goles_minimos'],
+        "goles_minimos" => intVal($elemento['goles_minimos']),
         "goles" => $elemento['goles'],
         "sueldo" => $elemento['sueldo'],
         "bono" => $elemento['bono'],
-        "sueldo_completo" => $elemento['sueldo_completo'],
+        "sueldo_completo" => round($elemento['sueldo_completo'],2),
         "equipo" => $elemento['equipo'],
       ];
     }
