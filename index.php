@@ -11,7 +11,23 @@ if($method == "OPTIONS") {
 
 if(isset($_GET['url'])){
   $modulo =  $_GET['url'];
-  if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+  if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+    $id = intval(preg_replace('/[^0-9]+/', '',$modulo));
+    switch ($modulo) {
+      case 'niveles':
+        $tabla = getGoalforLevel();
+        $data = [];
+        foreach ($tabla as $fila => $registro) {
+          $data[] = [
+            "nombre" => $fila,
+            "goles_minimos" => $registro,
+          ];
+        }
+        echo json_encode($data);
+        break;
+    }
+    http_response_code(200);
+  }else if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $body = file_get_contents("php://input");
     $json = json_decode($body, true);
     if(json_last_error() == 0){
@@ -20,7 +36,12 @@ if(isset($_GET['url'])){
         $tabla="reporte_sueldos";
         $suf="_rs";
         postSueldos($tabla, $suf, $json);
-        break;
+      break;
+      case 'niveles':
+        $tabla="niveles";
+        $suf="_niv";
+        insertNiveles($tabla, $suf, $json);
+      break;
     }
     http_response_code(200);
     }else{

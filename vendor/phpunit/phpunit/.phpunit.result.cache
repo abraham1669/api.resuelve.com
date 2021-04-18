@@ -1,0 +1,1 @@
+C:37:"PHPUnit\Runner\DefaultTestResultCache":297:{a:2:{s:7:"defects";a:2:{s:7:"Warning";i:6;s:42:"APITest::obtener_sueldo_completo_jugadores";i:4;}s:5:"times";a:5:{s:20:"StackTest::testEmpty";d:0.018;s:19:"StackTest::testPush";d:0.007;s:18:"StackTest::testPop";d:0;s:7:"Warning";d:0.011;s:42:"APITest::obtener_sueldo_completo_jugadores";d:0.577;}}}
