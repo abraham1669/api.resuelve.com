@@ -11,8 +11,10 @@ Para iniciar, solo necesitamos clonar el repositorio:
 3. Abre la Terminal.
 4. Cambia el directorio de trabajo actual a la ubicación en donde quieres clonar el directorio.
 5. Escribe git clone, y luego pega la URL que copiaste antes.
-   $ git clone https://github.com/abraham1669/api.resuelve.com.git
-   6.Presiona Enter para crear tu clon local.
+
+> $ git clone https://github.com/abraham1669/api.resuelve.com.git
+
+6.Presiona Enter para crear tu clon local.
 
 NOTAS:
 
@@ -34,9 +36,10 @@ NOTA: Tanto PHPUnit como Guzzle 7.0 fueron instalados por composer, por lo que s
 ### Instalación 🔧
 
 1. El despliegue de este proyecto es muy sencillo, simplemente necesitamos subir al servidor los siguientes archivos y directorios:
-   .htaccess (Preconfigurado para cargar las rutas)
-   index.php
-   includes/\*
+
+- .htaccess (Preconfigurado para cargar las rutas)
+- index.php
+- includes/\*
 
 2. Crear la base de datos en el servidor
 3. Una vez creada la base de datos, entrar a la ruta includes/\_db.php y cambiar los datos de conexión a la base de datos
@@ -51,15 +54,15 @@ NOTA:
 Para poder hacer uso de las pruebas, se puede seguir dos caminos:
 
 1. Mediante consola o terminal
-   1.1 Mediante la consola posicionarnos en el directorio del proyecto, ejemplo:
+   1.1. Mediante la consola posicionarnos en el directorio del proyecto, ejemplo:
    Supongamos que estoy en una Mac utilizando XAMPP como servidor local, tendría que dirigirme a /Applications/XAMPP/xamppfiles/htdocs/api.resuelve.com
    1.2. Dentro del directorio del proyecto, podemos ejecutar la instrucción: ./vendor/bin/phpunit tests --verbose
 2. En Visual Studio Code, existe un plugin para PHPUnit, por lo que podemos hacer uso del mismo:
-   2.1 Instalar el plugin PHPUnit de Elon Mallin.
-   2.2 Posicionarnos en el archivo de test que queremos ejecutar
-   2.3 Abrir la paleta de comandos (cmd + shift + p) en Mac
-   2.4 Ejecutar PHPUnit Test
-   2.5 El plugin nos preguntará si deseamos ejecutar únicamente una funcion(test) o el Suite de Tests (Clase)
+   2.1. Instalar el plugin PHPUnit de Elon Mallin.
+   2.2. Posicionarnos en el archivo de test que queremos ejecutar
+   2.3. Abrir la paleta de comandos (cmd + shift + p) en Mac
+   2.4. Ejecutar PHPUnit Test
+   2.5. El plugin nos preguntará si deseamos ejecutar únicamente una funcion(test) o el Suite de Tests (Clase)
 
 NOTAS:
 

@@ -71,10 +71,17 @@ if(isset($_GET['url'])){
       <div class="col-sm-12">
         <h1>BREAKPOINTS</h1>
         <div class="mb-2"></div>
-        <h2>Usuarios</h2>
+        <h2>Jugadores</h2>
         <div class="mb-1"></div>
         <ul class="list-group">
           <li class="list-group-item"><code>POST /jugadores</code></li>
+        </ul>
+        <div class="mb-2"></div>
+        <h2>Niveles</h2>
+        <div class="mb-1"></div>
+        <ul class="list-group">
+          <li class="list-group-item"><code>GET /Niveles</code></li>
+          <li class="list-group-item"><code>POST /Niveles</code></li>
         </ul>
       </div>
     </div>
