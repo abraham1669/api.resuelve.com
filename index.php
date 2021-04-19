@@ -1,61 +1,3 @@
-<?php 
-require_once 'includes/_functions.php';
-header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Headers: *");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, PATCH, DELETE");
-header("Allow: GET, POST, OPTIONS, PUT,PATCH, DELETE");
-$method = $_SERVER['REQUEST_METHOD'];
-if($method == "OPTIONS") {
-    die();
-}
-
-if(isset($_GET['url'])){
-  $modulo =  $_GET['url'];
-  if ($_SERVER['REQUEST_METHOD'] == 'GET'){
-    $id = intval(preg_replace('/[^0-9]+/', '',$modulo));
-    switch ($modulo) {
-      case 'niveles':
-        $tabla = getGoalforLevel();
-        $data = [];
-        foreach ($tabla as $fila => $registro) {
-          $data[] = [
-            "nombre" => $fila,
-            "goles_minimos" => $registro,
-          ];
-        }
-        echo json_encode($data);
-        break;
-      case 'equipos':
-      getEquipos();
-      break;
-    }
-    http_response_code(200);
-  }else if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $body = file_get_contents("php://input");
-    $json = json_decode($body, true);
-    if(json_last_error() == 0){
-      switch ($modulo) {
-      case 'jugadores':
-        $tabla="reporte_sueldos";
-        $suf="_rs";
-        postSueldos($tabla, $suf, $json);
-      break;
-      case 'niveles':
-        $tabla="niveles";
-        $suf="_niv";
-        insertNiveles($tabla, $suf, $json);
-      break;
-    }
-    http_response_code(200);
-    }else{
-      print_r(json_last_error());
-      http_response_code(400);
-    }
-  }else{
-    http_response_code(405);
-  }
-}else{
-?>
 <!DOCTYPE html>
 <html lang="es-MX">
 
@@ -99,6 +41,3 @@ if(isset($_GET['url'])){
 </body>
 
 </html>
-<?php
-}
-?>

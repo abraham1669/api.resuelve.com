@@ -25,12 +25,7 @@ function getEquipos(){
   }
   echo json_encode($tabla);
 }
-function postSueldos($tabla, $suf, $json){
-  // Paso 1, se obtienen los goles de acuerdo al nivel
-  // Paso 2, se recorre el json de entrada, para procesar la información de los goles mínimos y el alcance individual
-  // Paso 3, se recorre el json de entrada, para obtener el total requerido y total obtenido por el equipo completo
-  // Paso 4. Se reasigna a un nuevo arreglo de datos procesados
-  // Paso 5. Se recorre el arreglo nuevamente para poder realizar las operaciones necesarias para obtener el sueldo
+function obtenerAlcanceEquipo($json){
   $total_requerido = 0;
   $total_obtenido = 0;
   $tabla = getGoalforLevel();
@@ -49,6 +44,13 @@ function postSueldos($tabla, $suf, $json){
   }else{
     $alcance_equipo = floatVal($total_obtenido / $total_requerido);
   }
+  $arreglo = [
+    "alcance_equipo" => $alcance_equipo,
+    "datos_procesados" => $datos_procesados,
+  ];
+  return $arreglo;
+}
+function crearJsonDeRespuesta($datos_procesados, $alcance_equipo){
   $respuesta = [];
   if(sizeOf($datos_procesados) > 0){
     foreach ($datos_procesados as $datos => $elemento) {
@@ -68,6 +70,18 @@ function postSueldos($tabla, $suf, $json){
       ];
     }
   }
+  return $respuesta;
+}
+function postSueldos($tabla, $suf, $json){
+  // Paso 1, se obtienen los goles de acuerdo al nivel
+  // Paso 2, se recorre el json de entrada, para procesar la información de los goles mínimos y el alcance individual
+  // Paso 3, se recorre el json de entrada, para obtener el total requerido y total obtenido por el equipo completo
+  // Paso 4. Se reasigna a un nuevo arreglo de datos procesados
+  // Paso 5. Se recorre el arreglo nuevamente para poder realizar las operaciones necesarias para obtener el sueldo
+  $datos_generales = obtenerAlcanceEquipo($json);
+  $alcance_equipo = $datos_generales["alcance_equipo"];
+  $datos_procesados = $datos_generales["datos_procesados"];
+  $respuesta = crearJsonDeRespuesta($datos_procesados, $alcance_equipo);
   echo json_encode($respuesta);
   
 }
