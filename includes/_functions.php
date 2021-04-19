@@ -1,75 +1,9 @@
 <?php 
 require_once 'medoo.php';
 require_once '_db.php';
-// require_once 'JWT.php';
 
-// function generateToken($json) {
-//   global $db;
-//   if(isset($json['usuario']) && !empty($json['usuario']) && isset($json["password"]) && !empty($json['password'])){
-//     $usuario = trim($json['usuario']);
-//     $password = md5($json['password']);
-//     $siExiste = $db->count("tbl_usuarios",["AND" =>["correo_usr" => $usuario, "clave_usr" => $password]]);
-//     if($siExiste > 0){
-//       $data = $db->get("tbl_usuarios","*",["AND" =>["correo_usr" => $usuario, "clave_usr" => $password]]);
-//         if($data['activo_usr'] == 1){
-//             session_start();
-//             $_SESSION['id'] = $data['id_usr'];
-//             $_SESSION['nombre'] = $data['nombre_usr'];
-//             $_SESSION['correo'] = $data['correo_usr'];
-//             $_SESSION['permisos'] = $data['permisos_usr'];
-//             $payload = [
-//               'iat' => time(),
-//               'iss' => 'localhost',
-//               'exp' => time() + (15*60),
-//               'userId' => $data['id_usr']
-//             ];
-//             $token = JWT::encode($payload, 'Genotipo');
-//             $respuesta = [
-//               "status" => 1,
-//               "texto" => "Token Generado con éxito",
-//               "id" => $data['id_usr'],
-//               "nombre" => $data['nombre_usr'],
-//               "imagen" => $data['imagen_usr'],
-//               "token" => $token,
-//             ];
-//         }else{
-//             $respuesta = [
-//               "status" => 0,
-//               "texto" => "Contacte al administrador",
-//             ];
-//         }
-//     }else{
-//         $respuesta = [
-//           "status" => 0,
-//           "texto" => "Usuario o contraseña incorrectos",
-//         ];
-//     }
-//   }else{
-//       $respuesta = [
-//         "status" => 0,
-//         "texto" => "Datos Vacios",
-//       ];
-//   }
-//   echo json_encode($respuesta);
-// }
-// function validateSesion(){
-//   $headers = apache_request_headers();
-//   if(isset($headers['Authorization'])){
-//     $token = str_replace('Bearer ','',$headers['Authorization']);
-    
-//   }else{
-//     return false;
-//   }
-//   // $datos = [
-//   //   "status" => 500,
-//   //   "texto" => "Inicie Sesión",
-//   // ];
-//   // if(!isset($_SESSION['token']) && empty($_SESSION['token'])){
-//   //   echo json_encode($datos, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
-//   //   exit;
-//   // }
-// }
 function getGoalforLevel(){
+  // Nos conectamos a la base de datos para poder obtener los registros de los niveles.
   global $db;
   $tabla = [];
   $goles_requeridos_por_nivel = $db->select("niveles",["nombre_niv","goles_minimos_niv"]);
@@ -77,6 +11,19 @@ function getGoalforLevel(){
     $tabla[$gol['nombre_niv']] = $gol["goles_minimos_niv"];
   }
   return $tabla;
+}
+function getEquipos(){
+  // Nos conectamos a la base de datos para poder obtener los registros de los equipos
+  global $db;
+  $tabla = [];
+  $equipos = $db->select("equipos","*");
+  foreach ($equipos as $equipo => $eq) {
+    $tabla[] = [
+      'nombre' => $eq["nombre_eq"],
+      'id' => $eq["id_eq"],
+    ];
+  }
+  echo json_encode($tabla);
 }
 function postSueldos($tabla, $suf, $json){
   // Paso 1, se obtienen los goles de acuerdo al nivel
@@ -107,11 +54,8 @@ function postSueldos($tabla, $suf, $json){
     foreach ($datos_procesados as $datos => $elemento) {
       $suma_porcentajes = floatVal($alcance_equipo + $elemento['alcance_individual']);
       $porcentaje_obtenido = floatVal($suma_porcentajes / 2);
-      // print_r("Alcance de ".$elemento['nombre'].": ".$porcentaje_obtenido."<br>");
       $bono_obtenido = floatVal($elemento['bono'] * $porcentaje_obtenido);
-      // print_r("Bono de ".$elemento['nombre'].": ".$obtener_bono."<br>");
       $sueldo_completo = floatVal($elemento['sueldo'] + $bono_obtenido);
-      // print_r("El sueldo de ".$elemento['nombre'].": ".$sueldo_completo."<br>");
       $elemento['sueldo_completo'] = $sueldo_completo;
       $respuesta['jugadores'][] = [
         "nombre" => $elemento['nombre'],
@@ -125,29 +69,28 @@ function postSueldos($tabla, $suf, $json){
     }
   }
   echo json_encode($respuesta);
-  // print("<pre>".print_r($respuesta,true)."</pre>");
-  // $password = md5($clave);
-  // $entrada = [
-  //   "nombre".$suf => $nombre,
-  //   "correo".$suf => $correo,
-  //   "usuario".$suf => $usuario,
-  //   "clave".$suf => $password,
-  //   "permisos".$suf => $permiso,
-  //   "modulos".$suf => $modulos
-  // ];
-  // $datos = $db->insert($tabla, $entrada);
-  // $error = $db->error();
-  // $respuesta =  ["status" => "error", "code" => 400, "message" => $error[2]];
-  // if($datos->rowCount() > 0){
-  //   $respuesta =  ["status" => "ok", "code" => 200, "message" => "Acción realizada correctamente"];
-  // }
-  // echo json_encode($respuesta);
+  
 }
 function insertNiveles($tabla, $suf, $json){
+  // Función POST para poder insertar nuevos niveles
   global $db;
   $entrada = [
     "nombre".$suf => $nombre,
     "goles_minimos".$suf => $correo,
+  ];
+  $datos = $db->insert($tabla, $entrada);
+  $error = $db->error();
+  $respuesta =  ["status" => "error", "code" => 400, "message" => $error[2]];
+  if($datos->rowCount() > 0){
+    $respuesta =  ["status" => "ok", "code" => 200, "message" => "Acción realizada correctamente"];
+  }
+  echo json_encode($respuesta);
+}
+function insertEquipos($tabla, $suf, $json){
+  // Función POST para poder insertar nuevos equipos
+  global $db;
+  $entrada = [
+    "nombre".$suf => $nombre,
   ];
   $datos = $db->insert($tabla, $entrada);
   $error = $db->error();

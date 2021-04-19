@@ -25,6 +25,9 @@ if(isset($_GET['url'])){
         }
         echo json_encode($data);
         break;
+      case 'equipos':
+      getEquipos();
+      break;
     }
     http_response_code(200);
   }else if ($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -80,8 +83,15 @@ if(isset($_GET['url'])){
         <h2>Niveles</h2>
         <div class="mb-1"></div>
         <ul class="list-group">
-          <li class="list-group-item"><code>GET /Niveles</code></li>
-          <li class="list-group-item"><code>POST /Niveles</code></li>
+          <li class="list-group-item"><code>GET /niveles</code></li>
+          <li class="list-group-item"><code>POST /niveles</code></li>
+        </ul>
+        <div class="mb-2"></div>
+        <h2>Equipos</h2>
+        <div class="mb-1"></div>
+        <ul class="list-group">
+          <li class="list-group-item"><code>GET /equipos</code></li>
+          <li class="list-group-item"><code>POST /equipos</code></li>
         </ul>
       </div>
     </div>
