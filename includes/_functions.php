@@ -75,8 +75,8 @@ function insertNiveles($tabla, $suf, $json){
   // Función POST para poder insertar nuevos niveles
   global $db;
   $entrada = [
-    "nombre".$suf => $nombre,
-    "goles_minimos".$suf => $correo,
+    "nombre".$suf => $json['nombre'],
+    "goles_minimos".$suf => $json['goles_minimos'],
   ];
   $datos = $db->insert($tabla, $entrada);
   $error = $db->error();
@@ -90,7 +90,7 @@ function insertEquipos($tabla, $suf, $json){
   // Función POST para poder insertar nuevos equipos
   global $db;
   $entrada = [
-    "nombre".$suf => $nombre,
+    "nombre".$suf => $json['nombre']
   ];
   $datos = $db->insert($tabla, $entrada);
   $error = $db->error();
