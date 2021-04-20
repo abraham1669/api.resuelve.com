@@ -43,6 +43,8 @@ NOTA: Tanto PHPUnit como Guzzle 7.0 fueron instalados por composer, por lo que s
 
 2. Crear la base de datos en el servidor
 3. Una vez creada la base de datos, entrar a la ruta includes/\_db.php y cambiar los datos de conexión a la base de datos
+4. Para poder ejecutar las pruebas, es necesario instalar las dependencias de desarrollo, mediante composer
+   > $ composer install
 
 NOTA:
 
