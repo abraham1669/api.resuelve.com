@@ -3,19 +3,19 @@
     if ($_SERVER['HTTP_HOST'] == "localhost") {
         $db = new Medoo([
             'database_type' => 'mysql',
-            'database_name' => 'chalaner_api',
-            'server' => 'chalaneros.com',
-            'username' => 'chalaner_chalaneros',
-            'password' => 'Chalaneros.2020!',
+            'database_name' => 'u602339566_api',
+            'server' => 'internet-rv.com.mx',
+            'username' => 'u602339566_api',
+            'password' => '[4PbAs0g8Ut',
             'charset' => 'utf8'
         ]);
     } else {
         $db = new Medoo([
             'database_type' => 'mysql',
-            'database_name' => 'chalaner_api',
+            'database_name' => 'u602339566_api',
             'server' => 'localhost',
-            'username' => 'chalaner_chalaneros',
-            'password' => 'Chalaneros.2020!',
+            'username' => 'u602339566_api',
+            'password' => '[4PbAs0g8Ut',
             'charset' => 'utf8'
         ]);
     }

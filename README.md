@@ -1,6 +1,8 @@
 # API Resuelve Jugadores
 
-Este proyecto está enfocado en la prueba de Backend de Resuelve, en el se generaron algunos Breakpoints para el consumo de la API Básica Pública, puedes ver un demo en el siguiente enlace: [API Resuelve Jugadores](https://api.chalaneros.com/)
+Este proyecto está enfocado en la prueba de Backend de Resuelve, en el se generaron algunos Breakpoints para el consumo de la API Básica Pública, puedes ver un demo en el siguiente enlace: [API Resuelve Jugadores](http://api.internet-rv.com.mx/)
+
+Si quieres ver un demo funcionando de una interfaz para la API, puedes ir al siguiente enlace: [Resuelve Jugadores](http://jugadores.internet-rv.com.mx/), Si descargar el repositorio, lo puedes hacer en la siguiente liga: [Repositorio Resuelve Jugadores](https://github.com/abraham1669/jugadores.resuelve.com)
 
 ## Comenzando 🚀
 
@@ -73,7 +75,6 @@ NOTAS:
 
 ## Construido con 🛠️
 
-_Menciona las herramientas que utilizaste para crear tu proyecto_
 
 - [Medoo](https://medoo.in/) - Medoo Framework para Bases de Datos
 - [PHPUnit](https://phpunit.de/) - Pruebas Automatizadas
